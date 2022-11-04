@@ -28,7 +28,7 @@ if _predict_option == "Long term predict":
         m.fit(data_c)
         return m
     # predict period
-    period = int(st.number_input("예측 기간", step=1))
+    period = int(st.number_input("예측 기간 (시간)", step=1))
     params = {
         "changepoint_prior_scale": 0.5,
         "changepoint_range": 0.8,
@@ -52,17 +52,19 @@ if _predict_option == "Long term predict":
     st.write(fig)
     st.write(fig2)
 elif _predict_option == "Short term predict":
-    st.header("Short term floating population predict using GRU")
+    st.header("Short term floating population predict using LSTM")
+
+    col1, col2 = st.columns([3, 3])
 
     model = keras.models.load_model(MODEL_PATH)
 
-    ago_7 = int(st.slider("6시간전 인구수", step=10, max_value=5000))
-    ago_6 = int(st.slider("5시간전 인구수", step=10, max_value=5000))
-    ago_5 = int(st.slider("4시간전 인구수", step=10, max_value=5000))
-    ago_4 = int(st.slider("3시간전 인구수", step=10, max_value=5000))
-    ago_3 = int(st.slider("2시간전 인구수", step=10, max_value=5000))
-    ago_2 = int(st.slider("1시간전 인구수", step=10, max_value=5000))
-    ago_1 = int(st.slider("지금 인구수", step=10, max_value=5000))
+    ago_7 = int(col1.slider("6시간전 인구수", step=10, max_value=30000))
+    ago_6 = int(col2.slider("5시간전 인구수", step=10, max_value=30000))
+    ago_5 = int(col1.slider("4시간전 인구수", step=10, max_value=30000))
+    ago_4 = int(col2.slider("3시간전 인구수", step=10, max_value=30000))
+    ago_3 = int(col1.slider("2시간전 인구수", step=10, max_value=30000))
+    ago_2 = int(col2.slider("1시간전 인구수", step=10, max_value=30000))
+    ago_1 = int(col1.slider("지금 인구수", step=10, max_value=30000))
 
     time_list = [ago_7, ago_6, ago_5, ago_4, ago_3, ago_2, ago_1]
     time_list_x = ["6h ago", "5h ago", "4h ago", "3h ago", "2h ago", "1h ago", "now"]
@@ -74,7 +76,9 @@ elif _predict_option == "Short term predict":
 
     if st.button("Predict"):
         pred = int(model.predict(pred_value))
-        st.header(pred)
+        col2.subheader(f"1시간 후 예상인구: {pred}명")
+        if pred > 15000:
+            st.error('인구밀도가 기준치를 초과하였습니다!')
 
         pred_list.append(pred)
         fig, ax = plt.subplots()
