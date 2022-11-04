@@ -1,0 +1,7 @@
+조 이름: 해피 대구 
+조장: 송인욱
+조원: 곽영효, 신민수
+
+유동 인구 예측 프로그램
+https://ssongiu-white-blow-app-hi4e8n.streamlit.app/
+
