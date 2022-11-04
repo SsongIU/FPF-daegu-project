@@ -83,7 +83,7 @@ elif _predict_option == "Short term predict":
         pred = int(model.predict(pred_value))
         col2.subheader(f"1시간 후 예상인구: {pred}명")
         if pred > 15000:
-            st.error("인구밀도가 기준치를 초과하였습니다!")
+            st.error("유동인구수가 기준치를 초과하였습니다!")
 
         pred_list.append(pred)
         fig, ax = plt.subplots()
