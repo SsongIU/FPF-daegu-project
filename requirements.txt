@@ -4,3 +4,4 @@ streamlit
 prophet
 tensorflow
 jupyter
+matplotlib

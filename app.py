@@ -4,6 +4,7 @@ import pandas as pd
 import prophet
 import keras
 import os 
+import matplotlib.pyplot as plt
 
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
@@ -55,18 +56,32 @@ elif _predict_option == "Short term predict":
 
     model = keras.models.load_model(MODEL_PATH)
 
-    ago_7 = int(st.number_input("7시간전 인구수", step=10))
-    ago_6 = int(st.number_input("6시간전 인구수", step=10))
-    ago_5 = int(st.number_input("5시간전 인구수", step=10))
-    ago_4 = int(st.number_input("4시간전 인구수", step=10))
-    ago_3 = int(st.number_input("3시간전 인구수", step=10))
-    ago_2 = int(st.number_input("2시간전 인구수", step=10))
-    ago_1 = int(st.number_input("1시간전 인구수", step=10))
+    ago_7 = int(st.slider("6시간전 인구수", step=10, max_value=5000))
+    ago_6 = int(st.slider("5시간전 인구수", step=10, max_value=5000))
+    ago_5 = int(st.slider("4시간전 인구수", step=10, max_value=5000))
+    ago_4 = int(st.slider("3시간전 인구수", step=10, max_value=5000))
+    ago_3 = int(st.slider("2시간전 인구수", step=10, max_value=5000))
+    ago_2 = int(st.slider("1시간전 인구수", step=10, max_value=5000))
+    ago_1 = int(st.slider("지금 인구수", step=10, max_value=5000))
+
+    time_list = [ago_7, ago_6, ago_5, ago_4, ago_3, ago_2, ago_1]
+    time_list_x = ["6h ago", "5h ago", "4h ago", "3h ago", "2h ago", "1h ago", "now"]
+    pred_list = [ago_1]
+    pred_list_x = ["now", "1h after"]
+    x_ticks = ["6h ago", "5h ago", "4h ago", "3h ago", "2h ago", "1h ago", "now", "1h after"]
 
     pred_value = np.array([[ago_7, ago_6, ago_5, ago_4, ago_3, ago_2, ago_1]])
 
     if st.button("Predict"):
         pred = int(model.predict(pred_value))
-        st.write(pred)
+        st.header(pred)
+
+        pred_list.append(pred)
+        fig, ax = plt.subplots()
+        ax.plot(time_list_x, time_list)
+        ax.plot(pred_list_x, pred_list, color="red")
+        ax.set_xticks(x_ticks)
+        st.pyplot(fig)
+
     
     
