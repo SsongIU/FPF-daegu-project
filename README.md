@@ -1,4 +1,4 @@
-# daegu-FPF-project
+# FPF(Floating-Poplulation-Forecast)-daegu-project
 ## 경북대학교 리빙랩 해커톤 - 해피대구
 - 송인욱, 신민수, 곽영효
 
