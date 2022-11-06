@@ -19,6 +19,7 @@ if _predict_option == "Long term predict":
     st.header("Long term floating population predict using prophet")
     # prophet data
     data = pd.read_csv(DATA_PATH)
+
     # prophet model
     def prophet_model(data, params):
         data_c = data.copy()
@@ -33,7 +34,7 @@ if _predict_option == "Long term predict":
     sps = float(col2.select_slider("seasonality_prior_scale", options=[1, 10, 15, 20, 25, 30, 50], value=20))
 
     # predict period
-    period = int(st.number_input("예측 기간 (시간)", step=1, max_value=3000))
+    period = int(st.number_input("예측 기간 (시간)", step=1, max_value=5000))
     params = {
         "changepoint_prior_scale": cps,
         "changepoint_range": 0.8,
