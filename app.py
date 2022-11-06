@@ -11,7 +11,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 MODEL_PATH = "./model/model_population.h5"
 DATA_PATH = "./data/data.csv"
 
-st.title("Floating Population Predict and Warning")
+st.title("Floating Population Forecast")
 
 _predict_option = st.selectbox("Select predict term", ("Long term predict", "Short term predict"))
 
@@ -64,12 +64,12 @@ elif _predict_option == "Short term predict":
     model = keras.models.load_model(MODEL_PATH)
 
     ago_7 = int(col1.slider("6시간전 인구수", step=10, value=3000, max_value=30000))
-    ago_6 = int(col2.slider("5시간전 인구수", step=10, value=3500, max_value=30000))
+    ago_6 = int(col1.slider("5시간전 인구수", step=10, value=3500, max_value=30000))
     ago_5 = int(col1.slider("4시간전 인구수", step=10, value=5500, max_value=30000))
-    ago_4 = int(col2.slider("3시간전 인구수", step=10, value=6500, max_value=30000))
-    ago_3 = int(col1.slider("2시간전 인구수", step=10, value=7500, max_value=30000))
+    ago_4 = int(col1.slider("3시간전 인구수", step=10, value=6500, max_value=30000))
+    ago_3 = int(col2.slider("2시간전 인구수", step=10, value=7500, max_value=30000))
     ago_2 = int(col2.slider("1시간전 인구수", step=10, value=10000, max_value=30000))
-    ago_1 = int(col1.slider("지금 인구수", step=10, value=13000, max_value=30000))
+    ago_1 = int(col2.slider("지금 인구수", step=10, value=13000, max_value=30000))
 
     time_list = [ago_7, ago_6, ago_5, ago_4, ago_3, ago_2, ago_1]
     time_list_x = ["6h ago", "5h ago", "4h ago", "3h ago", "2h ago", "1h ago", "now"]
